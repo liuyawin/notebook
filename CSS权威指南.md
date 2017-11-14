@@ -85,7 +85,7 @@ CSS注释用/* */包裹。
 ```
     <style>
         ul:first-child{
-            color: red;
+            color: red;
         }
     </style>
 
@@ -283,8 +283,26 @@ border必须指定border-style，否则它的宽度会被重置为0。
 # 颜色和背景    
 ### 前景色
 对于非替换元素，前景色设置了元素中文本的颜色。边框的默认颜色也是前景色。前景色可以继承。      
-### 背景色
-背景色可以继承。      
+### 背景色background-color    
+前景色可以继承，背景色不可以继承。      
+背景包括前景之下直到边框外边界的所有空间。       
+### 背景图片background-image     
+默认值为none，可以向任何元素使用背景图片。所有背景属性都不能继承，背景图片也是如此。背景图片在背景颜色之上。      
+### 有方向的重复      
+background-repeat：repeat|repeat-x|repeat-y|no-repeat|inherit。    
+### 背景定位    
+background-position,应用于块级元素和替换元素。可取的值有百分数，数值，center，top，bottom，right，left。可以使用两个关键字，分别代表水平方向和垂直方向。当只有一个关键字时，center=center center，等价于50% 50%；top=top center||center top，等价于50% 0%；bottom=bottom center||center bottom等价于50% 100%；right=right center||center right，等价于100% 50%；left=left center||center left，等价于0 50%。      
+### 关联
+background-attachment，可能的取值为:scroll（默认，图像随文本滚动）|fixed（图像不随文本滚动）|inherit。      
+设为fixed的背景图，大小由可视区而不是包含元素的大小决定，定位也是相对于可视区域而不是包含元素。     
+### 汇总   
+background:可以从各个其他背景属性取一个值，可以采用任何顺序。      
+[<background-color>||<background-image>||<background-repeat>||<background-attachment>||<background-position>]|inherit。       
+如果省略了某个属性，就会默认填入这个属性的默认值。       
+      
+# 浮动和定位     
+
+
 
 
 
