@@ -297,7 +297,7 @@ background-attachment，可能的取值为:scroll（默认，图像随文本滚�
 设为fixed的背景图，大小由可视区而不是包含元素的大小决定，定位也是相对于可视区域而不是包含元素。     
 ### 汇总   
 background:可以从各个其他背景属性取一个值，可以采用任何顺序。      
-[<background-color>||<background-image>||<background-repeat>||<background-attachment>||<background-position>]|inherit。       
+[< background-color >||< background-image >||< background-repeat >||< background-attachment >||< background-position >]|inherit。       
 如果省略了某个属性，就会默认填入这个属性的默认值。       
       
 # 浮动和定位     
