@@ -301,18 +301,262 @@ background:可以从各个其他背景属性取一个值，可以采用任何顺
 如果省略了某个属性，就会默认填入这个属性的默认值。       
       
 # 浮动和定位     
+## 浮动   
+任何元素都能设置浮动。浮动会以某种方式将元素从文档中删除，但是它还是会影响布局；一个元素浮动时，其他元素会环绕该元素；浮动元素周围的外边距不会合并。     
+**包含块**：浮动元素的包含块是指其最近的块级祖先元素。    
+浮动元素会生成一个块级框，而不管这个元素本身是什么。    
+**浮动规则**：    
+* 浮动元素的左（或右）边界不会超过其包含元素的左（或右）边界。    
+* 浮动元素的左（或右）边界必须是源文档中之前出现的左浮动元素（或右浮动元素）的右（或左）边界，除非后出现的浮动元素的顶端在先出现的浮动元素的底端下面。这保证了浮动元素不会相互覆盖。    
+```
+.container {
+    width: 100px;
+    position: relative;
+    overflow: hidden;
+    margin: 32px;
+    border: 1px solid red;
+}
 
+.container div {
+    width: 40px;
+    height: 40px;
+    float: left;
+}
 
+.div1 {
+    border: 1px solid blue;
+}
 
+.div2 {
+    margin-top: 12px;
+    border: 1px solid red;
+}
 
+.div3 {
+    border: 1px solid green;
+}
 
+<div class="container">
+    <div class="div1"></div>
+    <div class="div2"></div>
+    <div class="div3"></div>
+</div>
+```
+![](img/9.png)
+* 左浮动元素的右边界不会在其右边右浮动元素的左边界的右边，反之亦然。这保证了浮动元素不会相互覆盖。    
+* 浮动元素的顶端不能比其父元素的内顶端更高。    
+* 浮动元素的顶端不能比之前所有浮动元素或块级元素的顶端更高。   
+```
+.container {
+            width: 100px;
+            position: relative;
+            overflow: hidden;
+            margin: 32px;
+            border: 1px solid red;
+        }
 
-      
-screenX:鼠标位置相对于用户屏幕水平偏移量，而screenY也就是垂直方向的，此时的参照点也就是原点是屏幕的左上角。      
-      
-clientX:跟screenX相比就是将参照点改成了浏览器内容区域的左上角，该参照点会随之滚动条的移动而移动。     
-      
-pageX：参照点也是浏览器内容区域的左上角，但它不会随着滚动条而变动。     
+        .container div {
+            height: 40px;
+            float: left;
+        }
+
+        .div1 {
+            width: 48px;
+            border: 1px solid blue;
+        }
+
+        .div2 {
+            width: 64px;
+            border: 1px solid red;
+        }
+
+        .div3 {
+            width: 20px;
+            border: 1px solid green;
+        }
+```
+![](img/10.png)     
+* 如果源文档中一个浮动元素之前出现另一个元素，浮动元素的顶端不能比包含该元素所生成框的任何行框的顶端跟更高。     
+```
+    .container div {
+        height: 40px;
+        float: right;
+    }
+
+    .div1 {
+        width: 48px;
+        border: 1px solid blue;
+    }
+    <div class="container">
+        <span>soigl kansdf ioaersdasd</span>
+        <div class="div1"></div>
+    </div>
+```
+![](img/11.png)  
+* 浮动元素不能超过其包含元素的边界，除非它太宽，本身都无法放下。    
+* 浮动元素必须尽可能高的放置。    
+* 左浮动元素必须向左尽可能远，右浮动元素必须向右尽可能远。位置越高，就会向左或者向右浮动得更远。       
         
+## 定位
+position:static|relative|absolute|fixed|inherit      
+static:默认值。元素框正常生成。块级元素生成一个矩形框，作为文档流的一部分，行内元素则会生成一个或多个行框，至于其父元素中。    
+relative：相对于自身偏移某个距离。元素仍保持其未定位前的形状，它原本所占有的空间仍然保留。    
+absolute：元素框从文档流中被完全删除，并相对于其包含块定位。    
+fixed：类似于absolute，不过其包含块是视窗本身。    
+**包含块**：被看做是“定位上下文”，分为以下几种情况：
+* 对于根元素，其包含块由用户代理建立。大多数为视窗大小的矩形；    
+* 对于非根元素，若position为relative或static，其包含块为离其最近的块级框、表单元格或行内块祖先框的内容边界构成；若position为absolute，包含块为最近的position不为static的祖先元素（可以是任意类型）。      
+定位的偏移属性定义了距离相应包含块**边**的距离，而不是左上角的偏移。若果用top、right、bottom和left描述四个边的位置，那么元素的宽度和高度将由这些偏移隐含决定。此时设置width和height属性可能会（没有内外边界时）无效。    
+### 内容溢出和剪裁    
+overflow：visible|hidden|scroll|auto|inherit    
+* visible：默认值，元素内容在元素框之外也可见。     
+* hidden：元素的内容会在元素边界处被剪裁，不会提供滚动接口使用户访问超出剪裁区域的内容。     
+* scroll：元素内容在元素边界处被剪裁，出现滚动条。    
+* auto：由用户代理决定采取哪种行为。    
+**内容剪裁**：clip，对绝对定位元素有效，可能的取值为rect(tio,right,bottom,left)|auto|inherit。
+对position为absolute的块级元素，将其上下外边距设为auto且top、bottom为0可得到相对于包含块**垂直**居中的效果。      
+    
+# 表布局     
+内部表元素生成矩形框，这些框有内容、内边距和边框，但是没有外边距。试图对单元格、行或其他任何内部表元素应用外边距，浏览器会将其忽略。     
+
+
+
+
+      
+event.screenX、event.screenY    
+鼠标相对于用户显示器屏幕左上角的X,Y坐标。标准事件和IE事件都定义了这2个属性     
+      
+event.clientX、event.clientY       
+鼠标相对于浏览器可视区域的X,Y坐标（将参照点改成了浏览器内容区域的左上角），可视区域不包括工具栏和滚动条。IE事件和标准事件都定义了这2个属性    
+    
+event.pageX、event.pageY    
+类似于event.clientX、event.clientY，但它们使用的是文档坐标而非窗口坐标。这2个属性不是标准属性，但得到了广泛支持。IE事件中没有这2个属性。    
+    
+event.offsetX、event.offsetY        
+这两个属性是IE特有的，鼠标相对于“触发事件的元素”的位置（鼠标想对于事件源元素的X,Y坐标）。    
+    
+window.pageXOffset    
+整数只读属性，表示X轴滚动条向右滚动过的像素数（表示文档向右滚动过的像素数）。IE不支持该属性，使用body元素的scrollLeft属性替代。     
+    
+window.pageYoffset    
+整数只读属性，表示Y轴滚动条向下滚动过的像素数（表示文档向下滚动过的像素数）。IE不支持该属性，使用body元素的scrollTop属性替代。     
+        
+$(selector).offset():返回或设置匹配元素相对于文档的偏移位置。      
+      
+width() 方法设置或返回元素的宽度（不包括内边距、边框或外边距）。     
+height() 方法设置或返回元素的高度（不包括内边距、边框或外边距）。    
+       
+innerWidth() 方法返回元素的宽度（包括内边距）。     
+innerHeight() 方法返回元素的高度（包括内边距）。      
+       
+outerWidth() 方法返回元素的宽度（包括内边距和边框）。      
+outerHeight() 方法返回元素的高度（包括内边距和边框）。      
+      
+outerWidth(true) 方法返回元素的宽度（包括内边距、边框和外边距）。      
+outerHeight(true) 方法返回元素的高度（包括内边距、边框和外边距）。      
+      
+### event对象
+
+|属性|描述|
+|----|----|
+|altKey|返回当事件被触发时，”ALT” 是否被按下。|
+|button|返回当事件被触发时，哪个鼠标按钮被点击。|
+|clientX|返回当事件被触发时，鼠标指针的水平坐标。|
+|clientY|返回当事件被触发时，鼠标指针的垂直坐标。|
+|ctrlKey|返回当事件被触发时，”CTRL” 键是否被按下。|
+|metaKey|返回当事件被触发时，”meta” 键是否被按下。|
+|relatedTarget|返回与事件的目标节点相关的节点。|
+|screenX|返回当某个事件被触发时，鼠标指针的水平坐标。|
+|screenY|返回当某个事件被触发时，鼠标指针的垂直坐标。|
+|shiftKey|返回当事件被触发时，”SHIFT” 键是否被按下。|
+||
+        
+
+IE属性(除了上面的鼠标/事件属性，IE 浏览器还支持下面的属性)
+|属性|描述|
+|----|----|
+|cancelBubble|如果事件句柄想阻止事件传播到包容对象，必须把该属性设为 true。|
+|fromElement|对于 mouseover 和 mouseout 事件，fromElement 引用移出鼠标的元素。|
+|keyCode|对于 keypress 事件，该属性声明了被敲击的键生成的 Unicode 字符码。|
+|offsetX,offsetY|发生事件的地点在事件源元素的坐标系统中的 x 坐标和 y 坐标。|
+|returnValue|如果设置了该属性，它的值比事件句柄的返回值优先级高。|
+|srcElement|对于生成事件的 Window 对象、Document 对象或 Element 对象的引用。|
+|toElement|对于 mouseover 和 mouseout 事件，该属性引用移入鼠标的元素。|
+x,y|事件发生的位置的 x 坐标和 y 坐标，它们相对于用CSS动态定位的最内层包容元素。|
+||
+
+      
+
+标准 Event 属性 下面列出了 2 级 DOM 事件标准定义的属性。
+
+|属性和方法|描述|
+|---|----|
+|bubbles|返回布尔值，指示事件是否是起泡事件类型。|
+|cancelable|返回布尔值，指示事件是否可拥可取消的默认动作。|
+|currentTarget|返回其事件监听器触发该事件的元素。|
+|eventPhase|返回事件传播的当前阶段。|
+|target|返回触发此事件的元素（事件的目标节点）。|
+|timeStamp|返回事件生成的日期和时间。|
+|type|返回当前 Event 对象表示的事件的名称。|
+|initEvent()|初始化新创建的 Event 对象的属性。|
+|preventDefault()|通知浏览器不要执行与事件关联的默认动作。|
+|stopPropagation()|不再派发事件。|  
+||
+     
+         
+### Event对象的一些兼容性写法
+* 获得event对象兼容性写法     
+event || (event = window.event);
+* 获得target兼容型写法     
+event.target||event.srcElement
+* 阻止浏览器默认行为兼容性写法     
+event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+* 阻止冒泡写法     
+event.stopPropagation ? event.stopPropagation() : (event.cancelBubble = true);
+* 注册和删除事件方法的形式    
+```
+// 绑定事件.
+function on(id, eventType, fn) {
+    var dom = this.isString(id) ? this.$id(id) : id;
+    if(dom.addEventListener) {
+        dom.addEventListener(eventType, fn);
+    } else {
+        if(dom.attachEvent) {
+            dom.attachEvent('on' + eventType, fn);
+        }
+    }
+},
+
+// 解除绑定
+function un(id, eventType, fn) {
+    var dom = this.$id(id);
+    if(dom.removeEventListener) {
+        dom.removeEventListener(eventType, fn, false);
+    } else {
+        if(dom.detachEvent) {
+            dom.detachEvent("on" + eventType, fn)
+        }
+    }
+
+}
+```
+     
+jquery鼠标事件汇总     
+|事件|说明|
+|---|---|
+|click事件|点击鼠标左键时触发|
+|dbclick事件|迅速连续的两次点击时触发|
+|mousedown事件|按下鼠标时触发|
+|mouseup事件|松开鼠标时触发|
+|mouseover事件|鼠标从一个元素移入另一个元素时触发|
+|mouseout事件|鼠标移出元素时触发|
+|mouseenter事件|鼠标移入元素时触发|
+|mouseleave事件|鼠标移出元素时触发|
+|hover||
+|toggle事件|鼠标点击切换事件| 
+||
+     
+
+
 
 
