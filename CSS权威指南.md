@@ -418,11 +418,40 @@ overflow：visible|hidden|scroll|auto|inherit
     
 # 表布局     
 内部表元素生成矩形框，这些框有内容、内边距和边框，但是没有外边距。试图对单元格、行或其他任何内部表元素应用外边距，浏览器会将其忽略。     
-
-
+表显示中使用的格式化层，从上到下依次是：单元格，行，行组，列，列组，表。基本来说，对应表各个方面的样式都在其各自层上绘制。上一层的背景会覆盖下一层。但是默认所有元素背景都是透明的。因此，如果上一层没有背景，那么下一层的背景就会透过上一层的元素可见。     
+### 表标题
+caption-side：可能的取值为top和bottom，这时标题会分别位于表的顶部和底部。caption元素会从table继承属性。      
+### 表单元格边框     
+border-collapse：可能的取值为collapse，separate或inherit。        
+border-collapse属性为separate时，可以指定其边框间隔，使用border-space属性，可能的取值为< length >< length >|inherit。    
+### 对齐
+水平对齐：text-align      
+垂直对齐：vertical-align，可能的取值为：top|bottom|middle|baseline。   
+# 列表与生成内容    
+列表中的项会生成块级框，不过一般的块级框多了一个部分，多出的部分不属于文档布局，而只是挂在一边。对于有序列表，它是一个数字；对于无序列表，它是一个点。   
+### 列表类型 
+list-style-type：用于修改列表项的标志类型。可能的取值有：disc（实心圆），circle（空心圆），square（方块），decimal（数字），upper-alpha（A, B C...），none等等。     
+list-style-image：列表项图像，可能的取值为：< uri >|none|inherit。   
+list-style-position：列表标志位置。可能的取值为outside（默认），inside和inherit。      
+以上三个属性可以合并为list-style属性，可以以任何顺序给出。     
+## 生成内容
+是指由浏览器创建的内容，而不是由标志或内容来表示，如列表标志就是生成内容。   
+可以使用:before或:after伪元素向文档中插入生成内容。这些伪元素会根据content属性把生成内容放在一个元素内容的前面或者后面。     
+禁止对:before和:after元素使用浮动和定位。另外还有如下限制：    
+* 若:before和:after选择器的主体是块级元素，则display属性只接受值none、inline、block和market，其他值都会转成block。     
+* 若:before和:after选择器的主体是行内元素，则display属性只接受值none和inline，其他值都会转成inline。     
+     
+:before和:after中的content的取值可能为字符串和URI等等。     
+生成内容从与之关联的元素继承可继承的属性。     
+      
+# 用户界面样式      
+
+##光标 cursor   
+URI|auto|default|pointer|crosshair|move|e-size|ne-size|nw-size|n-resize|se-resize|sw-resize|s-resize|w-resize|text|wait|help|progress|inherit
 
 
       
+# 杂项
 event.screenX、event.screenY    
 鼠标相对于用户显示器屏幕左上角的X,Y坐标。标准事件和IE事件都定义了这2个属性     
       
