@@ -151,4 +151,33 @@ var EventUtil = {
     
 ### 文本事件     
 textInput:在文本插入文本框之前会出发textInput事件。    
-
+      
+### 事件委托
+```
+<div id="container">
+    <button id="blue">blue</button>
+    <button id="green">green</button>
+    <button id="red">red</button>
+</div>
+<script>
+    document.getElementById('container').addEventListener('click', function (event) {
+        var target = event.target;
+        switch (target.id) {
+            case 'blue':
+                console.log('blue');
+                break;
+            case 'green':
+                console.log('green');
+                break;
+            case 'red':
+                console.log('red');
+                break;
+        }
+    })
+</script>
+```
+    
+“空事件处理程序”会占用内存影响性能。可能产生“空事件处理程序”的情况有：   
+* 从文档中移除带有事件处理程序的元素；
+* 用innerHTML替换页面中的某一部分；
+* 卸载页面时。
