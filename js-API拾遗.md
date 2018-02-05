@@ -1,4 +1,4 @@
-###创建、插入、删除、替换节点：    
+### 创建、插入、删除、替换节点：    
 createElement(),createTextNode();    
 appendChild(),insertBefore();    
 removeChild(),replaceChild()。    
@@ -15,8 +15,8 @@ function insertAt(parent, child, n){
     }
 }
 ```
-##文档的几何形状和滚动    
-###文档坐标和视口坐标：视口是浏览器的一部分，它不包括浏览器的外壳。     
+## 文档的几何形状和滚动    
+### 文档坐标和视口坐标：视口是浏览器的一部分，它不包括浏览器的外壳。     
 CSS指定元素位置时运用了文档坐标，而查询元素位置以及鼠标事件注册事件处理程序时报告的鼠标指针位置时在视口坐标系中的。    
 ```
 //查询窗口滚动条的位置
@@ -48,5 +48,5 @@ function getSize(node){
 }
 ```
     
-###滚动
+### 滚动
 scrollTo和scrollBy。两个方法都接收两个参数。scrollBy是相对的，在当前滚动条的位置上增加。      
