@@ -39,7 +39,7 @@ function getScrollOffsets(w){
 
 //查询元素的几何尺寸
 function getSize(node){
-    var box = node.getBoundingClientReact();
+    var box = node.getBoundingClientRect();
 
     return {
         width: box.width || (box.right - box.left),
