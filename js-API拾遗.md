@@ -49,4 +49,114 @@ function getSize(node){
 ```
     
 ### 滚动
-scrollTo和scrollBy。两个方法都接收两个参数。scrollBy是相对的，在当前滚动条的位置上增加。      
+scrollTo和scrollBy。两个方法都接收两个参数。scrollBy是相对的，在当前滚动条的位置上增加。           
+      
+## 传统事件类型    
+### 表单事件    
+submit|reset|change|click|blur|focus    
+表单事件中只有blur和focus不能冒泡，其他都能。     
+### Window事件    
+load|unload|onerror|resize|scroll|focus|blur    
+### 鼠标事件   
+mouseover|mousemove|mouseup|mousedown|click|dbclick|contextmenu(右键)|mouseout|mouseenter|mouseleave|mousewheel     
+mouseover和mouseout会冒泡，他们的不冒泡版本为mouseenter和mouseleave。     
+### 键盘事件
+keyup|keydown|keypress     
+## DOM事件    
+## HTML5事件    
+Video、Audio相关，拖拽相关，异步存储相关，...     
+## 触摸屏和移动设备事件    
+orientationchange|gesturestart|gestureend|gestruechange|touchstart|touchend|touchmove     
+
+## cookie相关    
+默认cookie有效期很短暂，只能持续在web浏览器的会话期间，用户关闭浏览器时，cookie中存储的数据就丢失了。     
+可以通过设置max-age属性来控制cookie的有效期，单位是秒。      
+cookie受同源策略的限制。默认cookie和创建它的web页面有关，并对该web页面以及和该页面同目录或者子目录下的页面可见。可以通过设置path和domain属性来控制cookie的可见性。
+```
+function cookieStorage(maxage, path){
+    var cookie = (function(){
+        var cookie = {};
+        var all = document.cookie;
+        if (all === '') {
+            return cookie;
+        }
+        var list = all.split('; ');
+        for (var i = 0; i < list.length; i++) {
+            var c = list[i];
+            var p = c.indexOf('=');
+            var name = c.substring(0, p);
+            var value = c.substring(p+1);
+
+            value = decodeURIComponent(value);
+            cookie[name] = value;
+        }
+        return cookie;
+    }());
+
+    //保存cookie中的所有name
+    var keys = [];
+    for (var key in cookie) keys.push(key);
+
+    this.length = keys.length;
+
+    this.key = function(n){
+        if (n<0 || n>this.length) {
+            return null;
+        }
+        return keys[n];
+    };
+
+    this.getItem = function(name){
+        return cookie[name] || null;
+    };
+
+    this.setItem = function(key, value){
+        if (!key in keys) {
+            keys.push(key);
+            this.length++;
+        }
+
+        cookie[key] = value;
+
+        var c = key + '=' + encodeURIComponent(value);
+
+        if (maxage) {
+            c += '; max-age=' + maxage;
+        }
+
+        if (path) {
+            c += '; path=' + path;
+        }
+
+        document.cookie = c;
+    };
+
+    this.removeItem = function(key){
+        if (!(key in cookie)) {
+            return;
+        }
+
+        delete cookie[key];
+
+        for (var i = 0; i < keys.length; i++) {
+            if (keys[i] === key) {
+                keys.splice(i, 1);
+                break;
+            }
+        }
+        this.length--;
+        //通过将值置为空以及max-age置为0来删除cookie
+        document.cookie = key + '=; max-age=0';
+    };
+
+    this.clear = function(){
+        for (var i = 0; i < keys.length; i++) {
+            document.cookie = keys[i] + '=; max-age=0';    
+        }
+
+        keys = [];
+        cookie = {};
+        this.length = 0;
+    }
+}
+```
