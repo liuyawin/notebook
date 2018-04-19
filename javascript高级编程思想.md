@@ -4,6 +4,7 @@ insertBefore()
 replaceChild()     
 removeChild()     
 cloneChild()     
+
 类数组对象：arguments，NodeList(childNodes)，HTMLCollection(getElenmentsBy...)         
       
 ### Element类型     
@@ -35,6 +36,12 @@ querySelector()和querySelectorAll()
 matchSelector()返回一个布尔类型。     
      
 DOM元素有以下五个属性：    
+* firstChild        
+* lastChild     
+* previousSibling      
+* nextSibling        
+* parentNode         
+* childNodes          
 * childElementCount   
 * firstElementChild   
 * lastElementChild   
@@ -43,16 +50,16 @@ DOM元素有以下五个属性：
     
 ### HTML5    
 1. 与类相关的扩充：getElementsByClassName   
-2. classList：是新集合类型DOMTokenList的事例，有length属性及以下几个方法：add(value),contains(value),remove(value),toggle(value)。     
+2. classList：是新集合类型DOMTokenList的实例，有length属性及以下几个方法：add(value),contains(value),remove(value),toggle(value)。     
 3. 焦点管理：document.activeElement，这个属性值会始终引用DOM中当前获得了焦点的元素。元素获得焦点的方法有页面加载、用户输入和在代码中调用focus()方法。文档加载期间，document.activeElement为null；文档加载完成后，document.activeElement中保存的是document.body元素。使用document.hasFocus()方法可以确定文档是否获得了焦点。     
 4. HTMLDocument的变化
     * readyState，可能的取值有两个，loading和complete。
     * 检测兼容模式还是标准模式：
     ```
     if(document.compatMode == 'CSS1Compat'){
-        console.log('Standards mode);
+        console.log('Standards mode');
     } else{
-        console.log('Quirks mode);
+        console.log('Quirks mode');
     }
     ```    
     * 获取head元素：document.head || document.getElementsByTagName('head')[0]
