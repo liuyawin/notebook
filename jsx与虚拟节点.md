@@ -25,7 +25,7 @@ function createElement(tag, attrs, ...children){
     };
 }
 ```    
-createElement方法返回的对象记录了这个DOM节点所有的信息，换言之，通过它我们就可以生成真正的DOM，这个记录信息的对象我们称之为虚拟DOM。    
+virtual-dom是代表DOM节点树的一种原生JS树结构。createElement方法返回的对象记录了这个DOM节点所有的信息，换言之，通过它我们就可以生成真正的DOM，这个记录信息的对象我们称之为虚拟DOM。    
 ## render
 ```
 React.render(
