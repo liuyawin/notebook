@@ -5,8 +5,13 @@ replaceChild()
 removeChild()     
 cloneChild()     
 
-类数组对象：arguments，NodeList(childNodes)，HTMLCollection(getElenmentsBy...)         
-      
+类数组对象：arguments，NodeList(childNodes)，HTMLCollection(getElenmentsBy...)，NamedNodeMap(element.attributes)         
+类数组对象和数组的区别：          
+* 一个是对象，一个是数组          
+* 当新元素被添加时，数组的length属性的值会自动更新，类数组对象则不会             
+* 设置数组的length属性可扩展或截断数组，而对于类数组对象来说仅仅是改变了一个属性的值而已          
+* 类数组不能调用数组方法             
+         
 ### Element类型     
 可以通过nodeName或tagName获取标签名。有三个方法可以操作其特性：setAttribute(),getAttribute()和removeAttribute()。      
 Element类型是唯一一个使用attributes属性的节点类型。attributes属性包含一个NamedNodeMap，与NodeList相同，也是一个“动态”集合。元素的每一个特性都由一个Attr节点表示，每个节点保存在NamedNodeMap中。NamedNodeMap对象拥有如下方法：getNamedItem(name),removeNamedItem(name),setNamedItem(name),item(pos)（获取位于数值pos位置处的节点）        
