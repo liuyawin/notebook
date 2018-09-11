@@ -49,19 +49,21 @@
 
     <script>
         var items = ['你好', '你好吗', '你吗好好', '好你啊'];
-        var ul = document.getElementsByClassName('js-suggest')[0];
-        var input = document.getElementById('searchInput');
-        input.addEventListener('keyup', function () {
-            var key = input.value;
-            var htmlStr = suggest(items, key);
-            if (!htmlStr || htmlStr.length === 0) {
-                ul.className = "js-suggest hide";
-            }else{
-                ul.className = "js-suggest";
-                ul.innerHTML = htmlStr;
-            }
-        })
-        function suggest(items, key) {
+        function suggest(items){
+            var ul = document.getElementsByClassName('js-suggest')[0];
+            var input = document.getElementById('searchInput');
+            input.addEventListener('keyup', function () {
+                var key = input.value;
+                var htmlStr = getHtmlStr(items, key);
+                if (!htmlStr || htmlStr.length === 0) {
+                    ul.className = "js-suggest hide";
+                }else{
+                    ul.className = "js-suggest";
+                    ul.innerHTML = htmlStr;
+                }
+            })
+        }
+        function getHtmlStr(items, key) {
             var htmlStr = '';
             var regStr = '';
             for (var i = 0; i < key.length; i++) {
