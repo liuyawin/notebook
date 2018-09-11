@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #container {
+            position: relative;
+        }
+
+        #container input {
+            width: 120px;
+            height: 32px;
+        }
+
+        .js-suggest {
+            position: absolute;
+            left: 0;
+            top: 34px;
+            border: 1px solid red;
+        }
+
+        .js-suggest li {
+            width: 120px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <input id="searchInput" type="text">
+        <ul class="js-suggest hide">
+        </ul>
+    </div>
+
+    <script>
+        var items = ['你好', '你好吗', '你吗好好', '好你啊'];
+        var ul = document.getElementsByClassName('js-suggest')[0];
+        var input = document.getElementById('searchInput');
+        input.addEventListener('keyup', function () {
+            var key = input.value;
+            var htmlStr = suggest(items, key);
+            if (!htmlStr || htmlStr.length === 0) {
+                ul.className = "js-suggest hide";
+            }else{
+                ul.className = "js-suggest";
+                ul.innerHTML = htmlStr;
+            }
+        })
+        function suggest(items, key) {
+            var htmlStr = '';
+            var regStr = '';
+            for (var i = 0; i < key.length; i++) {
+                regStr += key.charAt(i) + '.*?';
+            }
+            var reg = new RegExp(regStr);
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                if (reg.test(item)) {
+                    htmlStr += '<li>' + item + '</li>'
+                }
+            }
+
+            return htmlStr;
+        }
+    </script>
+</body>
+
+</html>

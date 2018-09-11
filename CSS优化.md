@@ -70,3 +70,6 @@ List-style-image: url(image.gif)  ----->> list-style: square inside url(image.gi
 * 避免使用子选择器；避免使用后代选择器，使用后代选择器的代价十分昂贵。           
 
 **总结**：网站编写CSS时，应该优先考虑使用class选择器，避免使用通配符选择器（*）和属性选择器（a[rel=”external”]），后代选择器与标签选择器结合使用也应避免。使用id选择器的性能最好，但是编写时要注意其唯一性，谨慎使用。CSS3选择器（例如：:nth-child(n)第n个孩子）在帮助我们锁定我们想要的元素的同时保持标记的干净和语义化，但事实是，这些花哨的选择器让更多的浏览器资源被密集使用。引用David Hyatt关于CSS3选择器的论述：如果你关心页面性能的话，他们真不该被使用！              
+      
+## 重绘和重排     
+[重绘（redraw或repaint）,重排（reflow）](https://www.cnblogs.com/cencenyue/p/7646718.html)
