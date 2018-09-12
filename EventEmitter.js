@@ -1,20 +1,25 @@
-function EventEmitter(){
+function EventEmitter() {
     this._eventList = [];
 }
 
 EventEmitter.prototype = {
     constructor: EventEmitter,
-    on: function(name, fn){
+    on: function (name, fn) {
         if (!this._eventList[name]) {
             this._eventList[name] = [];
         }
         this._eventList[name].push(fn);
     },
-    once: function(name, fn){
+    once: function (name, fn) {
+        function one() {
+            fn.apply(this, arguments);
+            //先绑定 执行后再删除
+            this.remove(name, one);
+        }
         fn.isOnce = true;
-        this.on(name, fn);
+        this.on(name, one);
     },
-    emit: function(){
+    emit: function () {
         var name = Array.prototype.shift.call(arguments);
         var fns = this._eventList[name];
         var onceArr = [];
@@ -29,11 +34,11 @@ EventEmitter.prototype = {
             }
         }
 
-        for (var j = onceArr.length; j > 0 ; j--) {
+        for (var j = onceArr.length; j > 0; j--) {
             fns.splice(onceArr[j], 1);
         }
     },
-    remove: function(name, fn){
+    remove: function (name, fn) {
         var fns = this._eventList[name];
         if (!fns) {
             return false;
