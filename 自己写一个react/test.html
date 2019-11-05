@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <title>Document</title>
+    <style>
+        .circle {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            border: 1px solid red;
+            animation: circle 5s linear infinite;
+        }
+
+        @keyframes circle {
+            0% {
+                transform: rotate(0deg);
+                left: 0;
+            }
+
+            100% {
+                transform: rotate(360deg);
+                left: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="circle"></div>
+    <div class="circle circle2"></div>
+</body>
+<script>
+    // var c2 = document.getElementsByClassName('circle2')[0];
+    // var aa = 0;
+    setInterval(function () {
+        var i = 0;
+        while (i < 1000000000) {
+            i++;
+        }
+        // c2.style.left = aa++ + 'px';
+    }, 100)
+</script>
+
+</html>
